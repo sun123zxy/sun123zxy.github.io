@@ -1,0 +1,114 @@
+/*:root{
+    --text-color: #eee;
+    --text-color-vice: #999;
+    --theme-color-text-first: #ff90ee;
+    --theme-color-text-second: #df5bcb;
+    --theme-color-background-first: #600050;
+    --theme-color-background-second: #3c003c;
+    --background-color: #000000b5;
+    --background-image: url(/assets/images/stairsOfHakugyokurou.png);
+    --background-postion: 0% 0%;
+}*/
+:root {
+    --text-color: #222;
+    --text-color-vice: #666;
+    --border-color: #acacac;
+    --theme-color-text-first: #385f6f;
+    --theme-color-text-second: #1f3640;
+    --theme-color-background-first: #a1a1a1;
+    --theme-color-background-second: #3c003c;
+    --background-color: #ffffffc9;
+    --background-image: url(/assets/images/fgsHakugyokurou.jpg);
+    --background-postion: 0% 0%;
+}
+
+/*
+.horizontal-list{
+    padding: 0;
+    margin: 0;
+}
+.horizontal-list a{
+    text-decoration: none;
+}
+.horizontal-list li{
+    list-style: none;
+    float: left;
+}*/
+
+.fclean{
+    clear: both; /*清除浮动*/
+}
+
+
+img{
+    max-width: 100%; /*防止图片溢出*/
+}
+a{
+    color: var(--theme-color-text-first);
+}
+a:hover{
+    color: var(--theme-color-text-second);
+}
+
+body{
+    background-image: var(--background-image);
+    background-position: var(--background-postion);
+    background-size: cover;
+    background-attachment: fixed; /*固定背景*/
+    color: var(--text-color);
+}
+#home{
+    background-color: var(--background-color);
+    margin: 15px auto;
+    width: 75%;
+    min-width: 800px;
+    padding: 10px 70px 10px 30px;
+    box-shadow: 0 0 25px black;
+}
+#sidebar{
+    float: left;
+    width: 17%;
+    margin-top: 30px;
+}
+#main{
+    float: right;
+    width: 80%; /*防止环绕*/
+}
+
+#footer{
+    border-top: 2px solid var(--theme-color-background-first);
+    margin-top: 50px;
+    text-align: center;
+}
+
+.text-vice{
+    color: var(--text-color-vice);
+    font-size: 90%;
+}
+/*postBody*/
+#postBody{
+    line-height: 150%;
+}
+#postBody blockquote{
+    border-left: 5px solid var(--border-color);
+    padding: 1px 0px 1px 30px;
+}
+/*---modules---*/
+#sidebar-profile{
+    text-align: center;
+    margin-bottom: 30px;
+}
+#sidebar-profile .avatar {
+    width: 150px;
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    padding: 10px;
+}
+#sidebar-profile p {
+    font-size: 110%;
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
+#sidebar-profile .nav{
+    color: var(--text-color-vice);
+}
