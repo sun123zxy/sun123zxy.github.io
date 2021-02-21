@@ -10,18 +10,15 @@
         <!-- The loading of KaTeX is deferred to speed up page rendering -->
         <script defer src="/assets/katex/katex.min.js"></script>
         <!-- To automatically render math in text elements, include the auto-render extension -->
-        <script defer src="/assets/katex/auto-render.min.js" onload="renderMathInElement(document.getElementById('postBody'));"></script>
+        <script defer src="/assets/katex/auto-render.min.js" onload="renderMathInElement(document.getElementById('post-body'));"></script>
     </head>
     <body>
         <link rel="stylesheet" href="/assets/css/default.css">
 <link rel="stylesheet" id="theme-container">
-
 <button id="theme-switch">Change the Theme!</button>
-<script src="/assets/js/theme.js"></script>
-
+<script src="/assets/js/theme_manager.js"></script>
 <div id="mask"></div>
-
-<div id="home">
+<div id="home" class="panel">
     <div id="header">
         <h1><a href="/">sun123zxy's Blog</a></h1>
 <p>Next Phantasm...</p>
@@ -40,7 +37,8 @@
         
             <div id="sidebar-news">
                 <h2>News</h2>
-Please note that this site is in construction. My current blog is still on <a href="https://www.cnblogs.com/sun123zxy/">cnblogs</a>.
+<p>Please note that this site is still under construction and not used.</p>
+<p>Currently my blog is on <a href="https://www.cnblogs.com/sun123zxy/">cnblogs</a>.</p>
             </div>
         
             <div id="sidebar-friends">
@@ -73,7 +71,7 @@ Please note that this site is in construction. My current blog is still on <a hr
     
         <div class="postPreview">
             <h2><a href="/p/testArticle/">Test Article</a></h2>
-            <p class="abstract">markdown渲染测试文章。 A test article with a bunch of maths.</p>
+            <p class="abstract">markdown渲染、目录锚点系统测试文章。 A test article with a bunch of maths.</p>
             <div class="text-vice" align="right">
                 <p>tags: 
                     
@@ -84,7 +82,7 @@ Please note that this site is in construction. My current blog is still on <a hr
                         <a href= "/tags#学习笔记" >学习笔记</a>
                     
                 </p>
-                <p>posted on 2020/11/06 | last modified on 2020/12/03</p>
+                <p>posted on 2020/11/06 | last modified on 2020/02/21</p>
             </div>
         </div>
     

@@ -10,18 +10,15 @@
         <!-- The loading of KaTeX is deferred to speed up page rendering -->
         <script defer src="/assets/katex/katex.min.js"></script>
         <!-- To automatically render math in text elements, include the auto-render extension -->
-        <script defer src="/assets/katex/auto-render.min.js" onload="renderMathInElement(document.getElementById('postBody'));"></script>
+        <script defer src="/assets/katex/auto-render.min.js" onload="renderMathInElement(document.getElementById('post-body'));"></script>
     </head>
     <body>
         <link rel="stylesheet" href="/assets/css/default.css">
 <link rel="stylesheet" id="theme-container">
-
 <button id="theme-switch">Change the Theme!</button>
-<script src="/assets/js/theme.js"></script>
-
+<script src="/assets/js/theme_manager.js"></script>
 <div id="mask"></div>
-
-<div id="home">
+<div id="home" class="panel">
     <div id="header">
         <h1><a href="/">sun123zxy's Blog</a></h1>
 <p>Next Phantasm...</p>
@@ -40,7 +37,8 @@
         
             <div id="sidebar-news">
                 <h2>News</h2>
-Please note that this site is in construction. My current blog is still on <a href="https://www.cnblogs.com/sun123zxy/">cnblogs</a>.
+<p>Please note that this site is still under construction and not used.</p>
+<p>Currently my blog is on <a href="https://www.cnblogs.com/sun123zxy/">cnblogs</a>.</p>
             </div>
         
             <div id="sidebar-friends">
@@ -68,16 +66,16 @@ Please note that this site is in construction. My current blog is still on <a hr
         
     </div>
     <div id="main">
-        <h1>Hello World!</h1>
-<div class="text-vice" align="right">
-    <p>tags: 
-        
-            <a href= "/tags#Test" >Test</a>
-        
-    </p>
-    <p>posted on 2020/11/04 | last modified on 2020/11/05</p>
-</div>
-<div id="postBody">
+        <div id="post-body">
+    <h1 id="post-title">Hello World!</h1>
+    <div class="text-vice" align="right">
+        <p>tags: 
+            
+                <a href= "/tags#Test" >Test</a>
+            
+        </p>
+        <p>posted on 2020/11/04 | last modified on 2020/11/05</p>
+    </div>
     <h2 id="markdown-test">Markdown Test</h2>
 <p>ahhhhhhhh</p>
 <p><span class="math inline">\(\gcd(a,b)\)</span></p>
@@ -92,6 +90,11 @@ Please note that this site is in construction. My current blog is still on <a hr
 \]</span></p>
 
 </div>
+<div id="contents" class="panel">
+    <h2>Contents</h2>
+    <div id="contents-detail"></div>
+</div>
+<script src="/assets/js/contents.js"></script>
     </div>
     <div class="fclean"></div>
     <div id="footer" class="text-vice">
