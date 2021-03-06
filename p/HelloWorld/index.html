@@ -18,42 +18,53 @@
 <button id="theme-switch">Change the Theme!</button>
 <script src="/assets/js/theme_manager.js"></script>
 <div id="mask"></div>
-<div id="home" class="panel">
-    <div id="header">
-        <h1><a href="/">sun123zxy's Blog</a></h1>
-<p>Next Phantasm...</p>
-    </div>
+<div id="home">
     <div id="sidebar">
         
-            <div id="sidebar-profile">
-                <img class="avatar" src="/assets/images/pig.png"></img>
-<p><strong>sun123zxy</strong></p>
+            <div id="sidebar-profile" class="panel">
+                
+                <div class="panel-content">
+                    <a href="/"><img class="avatar" src="/assets/images/pig.png"></img></a>
+<p class="nickname">sun123zxy</p>
 <div class="nav">
     <a href="/">Home</a> | 
     <a href="/about">About</a> | 
     <a href="/tags">Tags</a>
 </div>
+<p>Next Phantasm...</p>
+                </div>
             </div>
         
-            <div id="sidebar-news">
-                <h2>News</h2>
-<p>Please note that this site is still under construction and not used.</p>
+            <div id="sidebar-news" class="panel">
+                
+                <h2 class="panel-title">News</h2>
+                
+                <div class="panel-content">
+                    <p>Please note that this site is still under construction and not used.</p>
 <p>Currently my blog is on <a href="https://www.cnblogs.com/sun123zxy/">cnblogs</a>.</p>
+                </div>
             </div>
         
-            <div id="sidebar-friends">
-                <h2>My Friends</h2>
-<ul>
+            <div id="sidebar-friends" class="panel">
+                
+                <h2 class="panel-title">My Friends</h2>
+                
+                <div class="panel-content">
+                    <ul>
     <li><a href="https://www.cnblogs.com/Railgunforever">吸取教训</a></li>
     <li><a href="https://p9t6g.github.io">p9t6g</a></li>
     <li><a href="https://tbyangz.github.io">TbYangZ</a></li>
     <li><a href="https://www.cnblogs.com/ALANALLEN21LOVE28">CJ SYH</a></li>
 </ul>
+                </div>
             </div>
         
-            <div id="sidebar-tags">
-                <h2>Tags</h2>
-<ul>
+            <div id="sidebar-tags" class="panel">
+                
+                <h2 class="panel-title">Tags</h2>
+                
+                <div class="panel-content">
+                    <ul>
     
     <li><a href= "/tags#Test" >Test</a></li>
     
@@ -62,10 +73,16 @@
     <li><a href= "/tags#学习笔记" >学习笔记</a></li>
     
 </ul>
+                </div>
             </div>
         
+        
+            <div id="contents" class="panel"><h2 class="panel-title">Contents</h2>
+<div class="panel-content"></div>
+<script defer src="/assets/js/contents.js"></script></div>
+        
     </div>
-    <div id="main">
+    <div id="main" class="panel panel-content">
         <div id="post-body">
     <h1 id="post-title">Hello World!</h1>
     <div class="text-vice" align="right">
@@ -90,11 +107,6 @@
 \]</span></p>
 
 </div>
-<div id="contents" class="panel">
-    <h2>Contents</h2>
-    <div id="contents-detail"></div>
-</div>
-<script src="/assets/js/contents.js"></script>
     </div>
     <div class="fclean"></div>
     <div id="footer" class="text-vice">
