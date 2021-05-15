@@ -4,21 +4,19 @@
         <meta charset="utf-8">
         <title>Test Article - sun123zxy's Blog</title>
 
-        <script src="/assets/js/jquery-3.5.1.min.js"></script>
+        <script src="/assets/thirds/jquery/jquery-3.5.1.min.js"></script>
 
-        <link rel="stylesheet" href="/assets/katex/katex.min.css">
+        <link rel="stylesheet" href="/assets/thirds/katex/katex.min.css">
         <!-- The loading of KaTeX is deferred to speed up page rendering -->
-        <script defer src="/assets/katex/katex.min.js"></script>
+        <script defer src="/assets/thirds/katex/katex.min.js"></script>
         <!-- To automatically render math in text elements, include the auto-render extension -->
-        <script defer src="/assets/katex/auto-render.min.js" onload="renderMathInElement(document.getElementById('post-body'));"></script>
+        <script defer src="/assets/thirds/katex/auto-render.min.js" onload="renderMathInElement(document.getElementById('post-body'));"></script>
+        
+        <script src="/assets/thirds/highlight/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
     </head>
     <body>
-        <link rel="stylesheet" href="/assets/css/default.css">
-<link rel="stylesheet" id="theme-container">
-<button id="theme-switch">Change the Theme!</button>
-<script src="/assets/js/theme_manager.js"></script>
-<div id="mask"></div>
-<div id="home">
+        <div id="home">
     <div id="sidebar">
         
             <div id="sidebar-profile" class="panel">
@@ -368,162 +366,162 @@ G = \{ \tau_n^k \ | \ k \in [0,n), k \in Z \}
 <p>快速幂作为基本技巧就不提了；</p>
 <p>欧拉函数直接质因数分解求即可。这里会遇到一个小问题：外面一层枚举因数，里面一层分解质因数，这不 <span class="math inline">\(O(\sum_{d|n} \sqrt d)\)</span> 了吗？</p>
 <p>似乎利用数列的放缩之类的黑科技可以证明一个比 <span class="math inline">\(O(n)\)</span> 更紧的上界是 <span class="math inline">\(O(n^{\frac 3 4})\)</span> ，实际上则有香港记者的速度（洛谷 <span class="math inline">\(n=10^9\)</span> ， <span class="math inline">\(10^3\)</span> 组数据可以随便跑过）</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co">/*</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="co">洛谷P4980 Polya定理</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="co">sun123zxy</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co">朴素写法</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="co">洛谷共2.08s</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="co">2019/12/24</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="co">*/</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;cstdio&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;cstring&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;cmath&gt;</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;ctime&gt;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;cstdlib&gt;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;algorithm&gt;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;queue&gt;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;map&gt;</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;set&gt;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> std;</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>ll Rd(){</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>    ll ans=<span class="dv">0</span>;<span class="dt">char</span> c=getchar();</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a>    <span class="cf">while</span>(c&lt;<span class="ch">&#39;0&#39;</span>||c&gt;<span class="ch">&#39;9&#39;</span>) c=getchar();</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a>    <span class="cf">while</span>(c&gt;=<span class="ch">&#39;0&#39;</span>&amp;&amp;c&lt;=<span class="ch">&#39;9&#39;</span>) ans=ans*<span class="dv">10</span>+c-<span class="ch">&#39;0&#39;</span>,c=getchar();</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a>    <span class="cf">return</span> ans;</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a>}</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a><span class="at">const</span> ll MOD=<span class="fl">1E9</span>+<span class="dv">7</span>;</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a>ll QPow(ll x,ll up){</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a>    x%=MOD;</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true"></a>    ll ans=<span class="dv">1</span>;</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true"></a>    <span class="cf">while</span>(up)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true"></a>        <span class="cf">if</span>(up%<span class="dv">2</span>==<span class="dv">0</span>) x=x*x%MOD,up/=<span class="dv">2</span>;</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true"></a>        <span class="cf">else</span> ans=ans*x%MOD,up--;</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true"></a>    <span class="cf">return</span> ans;</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true"></a>}</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true"></a>ll Inv(ll x){<span class="cf">return</span> QPow(x,MOD-<span class="dv">2</span>);}</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true"></a>ll Phi(ll n){</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true"></a>    ll t=n;</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true"></a>    ll ans=<span class="dv">1</span>;</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true"></a>    <span class="cf">for</span>(ll i=<span class="dv">2</span>;i*i&lt;=t;i++){</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true"></a>        ll c=<span class="dv">0</span>;</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true"></a>        <span class="cf">while</span>(t%i==<span class="dv">0</span>) t/=i,c++;</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true"></a>        <span class="cf">if</span>(c) ans=ans*(QPow(i,c)-QPow(i,c-<span class="dv">1</span>)+MOD)%MOD;</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true"></a>    }</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true"></a>    <span class="cf">if</span>(t&gt;<span class="dv">1</span>) ans=ans*(t-<span class="dv">1</span>)%MOD;</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true"></a>    <span class="cf">return</span> ans;</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true"></a>}</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true"></a>ll N;</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true"></a>ll Polya(ll d){</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true"></a>    <span class="cf">return</span> QPow(N,d)*Phi(N/d)%MOD;</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true"></a>}</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true"></a><span class="dt">void</span> Solve(){</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true"></a>    ll Ans=<span class="dv">0</span>;</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true"></a>    <span class="cf">for</span>(ll i=<span class="dv">1</span>;i*i&lt;=N;i++){</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true"></a>        <span class="cf">if</span>(N%i==<span class="dv">0</span>){</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true"></a>            Ans+=Polya(i);</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true"></a>            <span class="cf">if</span>(i!=N/i) Ans+=Polya(N/i);</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true"></a>            Ans%=MOD;</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true"></a>        }</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true"></a>    }</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true"></a>    Ans=Ans*Inv(N)%MOD;</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true"></a>    printf(<span class="st">&quot;</span><span class="sc">%lld\n</span><span class="st">&quot;</span>,Ans);</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true"></a>}</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true"></a><span class="dt">int</span> main(){</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true"></a>    ll T=Rd();<span class="cf">while</span>(T--){</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true"></a>        scanf(<span class="st">&quot;</span><span class="sc">%lld</span><span class="st">&quot;</span>,&amp;N);</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true"></a>        Solve();</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true"></a>    }</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true"></a>}</span></code></pre></div>
+<pre class="cpp"><code>/*
+洛谷P4980 Polya定理
+sun123zxy
+朴素写法
+洛谷共2.08s
+2019/12/24
+*/
+#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;cmath&gt;
+#include&lt;ctime&gt;
+#include&lt;cstdlib&gt;
+#include&lt;algorithm&gt;
+#include&lt;queue&gt;
+#include&lt;vector&gt;
+#include&lt;map&gt;
+#include&lt;set&gt;
+using namespace std;
+typedef long long ll;
+ll Rd(){
+    ll ans=0;char c=getchar();
+    while(c&lt;&#39;0&#39;||c&gt;&#39;9&#39;) c=getchar();
+    while(c&gt;=&#39;0&#39;&amp;&amp;c&lt;=&#39;9&#39;) ans=ans*10+c-&#39;0&#39;,c=getchar();
+    return ans;
+}
+const ll MOD=1E9+7;
+ll QPow(ll x,ll up){
+    x%=MOD;
+    ll ans=1;
+    while(up)
+        if(up%2==0) x=x*x%MOD,up/=2;
+        else ans=ans*x%MOD,up--;
+    return ans;
+}
+ll Inv(ll x){return QPow(x,MOD-2);}
+
+ll Phi(ll n){
+    ll t=n;
+    ll ans=1;
+    for(ll i=2;i*i&lt;=t;i++){
+        ll c=0;
+        while(t%i==0) t/=i,c++;
+        if(c) ans=ans*(QPow(i,c)-QPow(i,c-1)+MOD)%MOD;
+    }
+    if(t&gt;1) ans=ans*(t-1)%MOD;
+    return ans;
+}
+
+ll N;
+ll Polya(ll d){
+    return QPow(N,d)*Phi(N/d)%MOD;
+}
+void Solve(){
+    ll Ans=0;
+    for(ll i=1;i*i&lt;=N;i++){
+        if(N%i==0){
+            Ans+=Polya(i);
+            if(i!=N/i) Ans+=Polya(N/i);
+            Ans%=MOD;
+        }
+    }
+    Ans=Ans*Inv(N)%MOD;
+    printf(&quot;%lld\n&quot;,Ans);
+}
+int main(){
+    ll T=Rd();while(T--){
+        scanf(&quot;%lld&quot;,&amp;N);
+        Solve();
+    }
+    return 0;
+}</code></pre>
 <p>不过当然有真正 <span class="math inline">\(O(\sqrt n)\)</span> 的写法。只需在最外层分解质因数，然后DFS的去枚举因数，这样就不用每次去分解 <span class="math inline">\(\frac{n}{d}\)</span> 啦！于是这种写法就快更多了。</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="co">/*</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="co">洛谷P4980 Polya定理</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="co">sun123zxy</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">更优写法</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co">洛谷共125ms</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">2019/12/24</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co">*/</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;cstdio&gt;</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;cstring&gt;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;cmath&gt;</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;ctime&gt;</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;cstdlib&gt;</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;algorithm&gt;</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;queue&gt;</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;map&gt;</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a><span class="pp">#include</span><span class="im">&lt;set&gt;</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a><span class="kw">using</span> <span class="kw">namespace</span> std;</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a><span class="kw">typedef</span> <span class="dt">long</span> <span class="dt">long</span> ll;</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a><span class="dt">int</span> Rd(){</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a>    <span class="dt">int</span> ans=<span class="dv">0</span>;<span class="dt">char</span> c=getchar();</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a>    <span class="cf">while</span>(c&lt;<span class="ch">&#39;0&#39;</span>||c&gt;<span class="ch">&#39;9&#39;</span>) c=getchar();</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a>    <span class="cf">while</span>(c&gt;=<span class="ch">&#39;0&#39;</span>&amp;&amp;c&lt;=<span class="ch">&#39;9&#39;</span>) ans=ans*<span class="dv">10</span>+c-<span class="ch">&#39;0&#39;</span>,c=getchar();</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a>    <span class="cf">return</span> ans;</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a>}</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true"></a><span class="at">const</span> ll MOD=<span class="fl">1E9</span>+<span class="dv">7</span>;</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true"></a>ll QPow(ll x,ll up,<span class="dt">bool</span> isM=<span class="dv">1</span>){</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true"></a>    x%=MOD;</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true"></a>    ll ans=<span class="dv">1</span>;</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true"></a>    <span class="cf">while</span>(up){</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true"></a>        <span class="cf">if</span>(up%<span class="dv">2</span>==<span class="dv">0</span>) x=x*x,up/=<span class="dv">2</span>;</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true"></a>        <span class="cf">else</span> ans=ans*x,up--;</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true"></a>        <span class="cf">if</span>(isM) x%=MOD,ans%=MOD;</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true"></a>    }</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true"></a>    <span class="cf">return</span> ans;</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true"></a>}</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true"></a>ll Inv(ll x){<span class="cf">return</span> QPow(x,MOD-<span class="dv">2</span>);}</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true"></a><span class="kw">namespace</span> Div{</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true"></a>    <span class="dt">int</span> p[<span class="dv">30</span>],c[<span class="dv">30</span>];</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true"></a>    <span class="dt">int</span> pN;</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true"></a>    <span class="dt">void</span> Div(<span class="dt">int</span> nb){</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true"></a>        pN=<span class="dv">0</span>;</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true"></a>        <span class="dt">int</span> t=nb;</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true"></a>        <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">2</span>;<span class="dv">1</span><span class="bu">LL</span>*i*i&lt;=t;i++){</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true"></a>            <span class="cf">if</span>(t%i==<span class="dv">0</span>){</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true"></a>                p[++pN]=i,c[pN]=<span class="dv">0</span>;</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true"></a>                <span class="cf">while</span>(t%i==<span class="dv">0</span>) t/=i,c[pN]++;</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true"></a>            }</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true"></a>        }<span class="cf">if</span>(t&gt;<span class="dv">1</span>) p[++pN]=t,c[pN]=<span class="dv">1</span>;</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true"></a>    }</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true"></a>}</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true"></a></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true"></a><span class="dt">int</span> N;</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true"></a>ll Ans;</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true"></a><span class="dt">void</span> DFS(<span class="dt">int</span> pos,ll d,ll phi){</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true"></a>    <span class="kw">using</span> <span class="kw">namespace</span> Div;</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true"></a>    <span class="cf">if</span>(pos==pN+<span class="dv">1</span>){</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true"></a>        Ans=(Ans+QPow(N,d)*phi)%MOD;</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true"></a>        <span class="cf">return</span> ;</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true"></a>    }</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true"></a>    ll tpow=<span class="dv">1</span>,tphi=QPow(p[pos],c[pos],<span class="dv">0</span>)-QPow(p[pos],c[pos]-<span class="dv">1</span>,<span class="dv">0</span>);</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true"></a>    <span class="cf">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;=c[pos];i++){</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true"></a>        DFS(pos+<span class="dv">1</span>,d*tpow,phi*tphi);</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true"></a>        tpow*=p[pos];</span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true"></a>        <span class="cf">if</span>(i==c[pos]-<span class="dv">1</span>) tphi=<span class="dv">1</span>;</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true"></a>        <span class="cf">else</span> tphi/=p[pos];</span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true"></a>    }</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true"></a>}</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true"></a><span class="dt">void</span> Solve(){</span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true"></a>    Div::Div(N);</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true"></a>    Ans=<span class="dv">0</span>;DFS(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>);</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true"></a>    Ans=Ans*Inv(N)%MOD;</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true"></a>    printf(<span class="st">&quot;</span><span class="sc">%lld\n</span><span class="st">&quot;</span>,Ans);</span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true"></a>}</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true"></a><span class="dt">int</span> main(){</span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true"></a>    <span class="dt">int</span> T=Rd();<span class="cf">while</span>(T--){</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true"></a>        scanf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st">&quot;</span>,&amp;N);</span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true"></a>        Solve();</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true"></a>    }</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true"></a>}</span></code></pre></div>
+<pre class="cpp"><code>/*
+洛谷P4980 Polya定理
+sun123zxy
+更优写法
+洛谷共125ms
+2019/12/24
+*/
+#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;cmath&gt;
+#include&lt;ctime&gt;
+#include&lt;cstdlib&gt;
+#include&lt;algorithm&gt;
+#include&lt;queue&gt;
+#include&lt;vector&gt;
+#include&lt;map&gt;
+#include&lt;set&gt;
+using namespace std;
+typedef long long ll;
+int Rd(){
+    int ans=0;char c=getchar();
+    while(c&lt;&#39;0&#39;||c&gt;&#39;9&#39;) c=getchar();
+    while(c&gt;=&#39;0&#39;&amp;&amp;c&lt;=&#39;9&#39;) ans=ans*10+c-&#39;0&#39;,c=getchar();
+    return ans;
+}
+const ll MOD=1E9+7;
+ll QPow(ll x,ll up,bool isM=1){
+    x%=MOD;
+    ll ans=1;
+    while(up){
+        if(up%2==0) x=x*x,up/=2;
+        else ans=ans*x,up--;
+        if(isM) x%=MOD,ans%=MOD;
+    }
+    return ans;
+}
+ll Inv(ll x){return QPow(x,MOD-2);}
+
+namespace Div{
+    int p[30],c[30];
+    int pN;
+    void Div(int nb){
+        pN=0;
+        int t=nb;
+        for(int i=2;1LL*i*i&lt;=t;i++){
+            if(t%i==0){
+                p[++pN]=i,c[pN]=0;
+                while(t%i==0) t/=i,c[pN]++;
+            }
+        }if(t&gt;1) p[++pN]=t,c[pN]=1;
+    }
+}
+
+int N;
+ll Ans;
+void DFS(int pos,ll d,ll phi){
+    using namespace Div;
+    if(pos==pN+1){
+        Ans=(Ans+QPow(N,d)*phi)%MOD;
+        return ;
+    }
+    ll tpow=1,tphi=QPow(p[pos],c[pos],0)-QPow(p[pos],c[pos]-1,0);
+    for(int i=0;i&lt;=c[pos];i++){
+        DFS(pos+1,d*tpow,phi*tphi);
+        tpow*=p[pos];
+        if(i==c[pos]-1) tphi=1;
+        else tphi/=p[pos];
+    }
+}
+void Solve(){
+    Div::Div(N);
+    Ans=0;DFS(1,1,1);
+    Ans=Ans*Inv(N)%MOD;
+    printf(&quot;%lld\n&quot;,Ans);
+}
+int main(){
+    int T=Rd();while(T--){
+        scanf(&quot;%d&quot;,&amp;N);
+        Solve();
+    }
+    return 0;
+}</code></pre>
 <h2 id="s-5">5. 总结</h2>
 <p>对于大多数题目，Burnside &amp; Polya通常是套在最表面的那一层皮，难点一般在求 <span class="math inline">\(|C(f)|\)</span> 或者 <span class="math inline">\(f(\gcd(n,i))\)</span> 的部分。</p>
 <h2 id="s-6">6. 参考及后记</h2>
@@ -551,6 +549,22 @@ G = \{ \tau_n^k \ | \ k \in [0,n), k \in Z \}
         <p>sun123zxy's blog | Powered by Jekyll</p>
     </div>
 </div>
+<div id="round-button-container">
+    <div id="theme-info" class="round-button-shell">
+        <div class="round-button"><img src="/assets/images/info.png"></img></div>
+        <div class="hover-info">Theme Info</div>
+    </div>
+    <div id="theme-switch" class="round-button-shell">
+        <div class="round-button"><img src="/assets/images/switch.png"></img></div>
+        <div class="hover-info">Theme Switch</div>
+    </div>
+</div>
+<link rel="stylesheet" href="/assets/css/default.css">
+<link rel="stylesheet" id="theme-container">
+<div id="mask"></div>
+<script src="/assets/js/theme_data.js"></script>
+<script src="/assets/js/round_button_manager.js"></script>
+<script src="/assets/js/theme_manager.js"></script>
 
 <!-- <script src="/assets/js/scroll.js"></script> -->
 <!-- Waiting for Chrome support -->

@@ -4,21 +4,19 @@
         <meta charset="utf-8">
         <title>Home - sun123zxy's Blog</title>
 
-        <script src="/assets/js/jquery-3.5.1.min.js"></script>
+        <script src="/assets/thirds/jquery/jquery-3.5.1.min.js"></script>
 
-        <link rel="stylesheet" href="/assets/katex/katex.min.css">
+        <link rel="stylesheet" href="/assets/thirds/katex/katex.min.css">
         <!-- The loading of KaTeX is deferred to speed up page rendering -->
-        <script defer src="/assets/katex/katex.min.js"></script>
+        <script defer src="/assets/thirds/katex/katex.min.js"></script>
         <!-- To automatically render math in text elements, include the auto-render extension -->
-        <script defer src="/assets/katex/auto-render.min.js" onload="renderMathInElement(document.getElementById('post-body'));"></script>
+        <script defer src="/assets/thirds/katex/auto-render.min.js" onload="renderMathInElement(document.getElementById('post-body'));"></script>
+        
+        <script src="/assets/thirds/highlight/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
     </head>
     <body>
-        <link rel="stylesheet" href="/assets/css/default.css">
-<link rel="stylesheet" id="theme-container">
-<button id="theme-switch">Change the Theme!</button>
-<script src="/assets/js/theme_manager.js"></script>
-<div id="mask"></div>
-<div id="home">
+        <div id="home">
     <div id="sidebar">
         
             <div id="sidebar-profile" class="panel">
@@ -101,14 +99,14 @@
     
         <div class="postPreview">
             <h2><a href="/p/HelloWorld/">Hello World!</a></h2>
-            <p class="abstract">Test test test.</p>
+            <p class="abstract">A testing article.</p>
             <div class="text-vice" align="right">
                 <p>tags: 
                     
                         <a href= "/tags#Test" >Test</a>
                     
                 </p>
-                <p>posted on 2020/11/04 | last modified on 2020/11/05</p>
+                <p>posted on 2020/11/04 | last modified on 2021/05/15</p>
             </div>
         </div>
     
@@ -119,6 +117,22 @@
         <p>sun123zxy's blog | Powered by Jekyll</p>
     </div>
 </div>
+<div id="round-button-container">
+    <div id="theme-info" class="round-button-shell">
+        <div class="round-button"><img src="/assets/images/info.png"></img></div>
+        <div class="hover-info">Theme Info</div>
+    </div>
+    <div id="theme-switch" class="round-button-shell">
+        <div class="round-button"><img src="/assets/images/switch.png"></img></div>
+        <div class="hover-info">Theme Switch</div>
+    </div>
+</div>
+<link rel="stylesheet" href="/assets/css/default.css">
+<link rel="stylesheet" id="theme-container">
+<div id="mask"></div>
+<script src="/assets/js/theme_data.js"></script>
+<script src="/assets/js/round_button_manager.js"></script>
+<script src="/assets/js/theme_manager.js"></script>
 
 <!-- <script src="/assets/js/scroll.js"></script> -->
 <!-- Waiting for Chrome support -->
